@@ -1,3 +1,6 @@
+// アプリに必要なリソースを手に入れるためのメソッドが並ぶ
+// リクエストに必要なパラメータ等はここで付与することができる
+
 export default class postUsecase {
   private client: any;
 
@@ -9,7 +12,7 @@ export default class postUsecase {
     return await this.client.getPosts(id);
   }
 
-  async getPostsAll(): Promise<any> {
-    return await this.client.getPosts();
+  async getPostsList(): Promise<any> {
+    return await this.client.getPostsAll();
   }
 }
