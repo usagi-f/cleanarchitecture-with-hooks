@@ -2,7 +2,24 @@ import { useState, useEffect } from 'react';
 import postUsecase from '../usecase/postUsecase';
 import restClient from '../driver/restClient';
 
-const initialState = {
+type Post = {
+  id: number;
+  title: string;
+  body: string;
+};
+
+// UIへ渡すオブジェクト
+interface PickupPostAdapter {
+  state: {
+    post: Post;
+    loading: boolean;
+  },
+  functions: {
+    reload: (id: number) => Promise<void>;
+  }
+}
+
+const initialState: Post = {
   id: 0,
   title: 'No Title',
   body: 'No Body'
@@ -10,14 +27,14 @@ const initialState = {
 
 // UIの構築に必要なオブジェクトを取得して提供する
 // この例では「ピックアップ投稿」を表示するために、postデータを手に入れるユースケースを利用する
-export default () => {
+export default (): PickupPostAdapter => {
 
   // Stateの生成
   const [post, updatePost] = useState(initialState);
   const [loading, updateLoading] = useState(false);
 
   // 処理は自由に分割してもよい
-  const getPostsByID = async (id: number) => {
+  const getPostsByID = async (id: number): Promise<void> => {
     updateLoading(true);
     const driver = new restClient();
     const usecase = new postUsecase(driver);
@@ -40,7 +57,7 @@ export default () => {
   }, [])
 
   // 外部からStateを操作するための関数
-  const reload = async (id: number) => await getPostsByID(id);
+  const reload = async (id: number): Promise<void> => await getPostsByID(id);
 
   // Stateと操作用の関数をexportする
   return {

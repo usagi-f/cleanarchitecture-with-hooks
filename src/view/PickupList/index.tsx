@@ -1,7 +1,8 @@
 import React, { useRef } from 'react';
 import pickupPostAdapter from '../../adapter/pickupPostAdapter'
 
-interface PostItem {
+// コンポーネントの内部で利用する型
+type PostItem = {
   id: number;
   title: string;
   body: string;
