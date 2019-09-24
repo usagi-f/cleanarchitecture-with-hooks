@@ -1,5 +1,5 @@
 import React, { useRef } from 'react';
-import postAdapter from '../../adapter/postAdapter'
+import pickupPostAdapter from '../../adapter/pickupPostAdapter'
 
 interface PostItem {
   id: number;
@@ -9,16 +9,15 @@ interface PostItem {
 
 const PostItem = (data: PostItem) => (
   <div>
-    <p>ID: {data.id}</p>
-    <h1>{data.title}</h1>
+    <h3>{data.id}: {data.title}</h3>
     <p>{data.body}</p>
   </div>
 );
 
 
-const Post: React.FC = () => {
+const PickupList: React.FC = () => {
   // AdapterからStateと関数を取得
-  const { state, functions } = postAdapter();
+  const { state, functions } = pickupPostAdapter();
 
   const inputEl = useRef<HTMLInputElement>(null);
   const handleOnClick = () => {
@@ -29,10 +28,14 @@ const Post: React.FC = () => {
 
   return (
     <div>
+      <h1>Pickup List</h1>
+      <h2>Reload Form</h2>
       <input type="number" ref={inputEl} defaultValue={`1`} />
       <button type="button" onClick={handleOnClick}>reload</button>
+
+      <h2>Post Data</h2>
       {state.loading ? (
-        <p>Loading...</p>
+        <div>Loading...</div>
       ) : (
         <PostItem {...state.post} />
       )}
@@ -40,4 +43,4 @@ const Post: React.FC = () => {
   )
 };
 
-export default Post;
+export default PickupList;

@@ -1,10 +1,10 @@
 import React from 'react';
-import Post from './Post';
+import PickupList from './PickupList';
 import './App.css';
 
 const App: React.FC = () => (
   <div>
-    <Post />
+    <PickupList />
   </div>
 );
 

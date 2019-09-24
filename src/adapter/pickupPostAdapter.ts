@@ -8,7 +8,10 @@ const initialState = {
   body: 'No Body'
 };
 
+// UIの構築に必要なオブジェクトを取得して提供する
+// この例では「ピックアップ投稿」を表示するために、postデータを手に入れるユースケースを利用する
 export default () => {
+
   // Stateの生成
   const [post, updatePost] = useState(initialState);
   const [loading, updateLoading] = useState(false);
