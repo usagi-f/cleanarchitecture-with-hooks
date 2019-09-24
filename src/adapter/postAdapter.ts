@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import postUsecase from '../usecase/postUsecase';
-import postDriver from '../driver/postDriver';
+import restClient from '../driver/restClient';
 
 const initialState = {
   id: 0,
@@ -16,7 +16,7 @@ export default () => {
   // 処理は自由に分割してもよい
   const getPostsByID = async (id: number) => {
     updateLoading(true);
-    const driver = new postDriver();
+    const driver = new restClient();
     const usecase = new postUsecase(driver);
     const res = await usecase.getPosts(id);
     updatePost({
