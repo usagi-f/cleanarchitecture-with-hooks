@@ -9,9 +9,11 @@ const initialState = {
 };
 
 export default () => {
+  // Stateの生成
   const [post, updatePost] = useState(initialState);
   const [loading, updateLoading] = useState(false);
 
+  // 処理は自由に分割してもよい
   const getPostsByID = async (id: number) => {
     updateLoading(true);
     const driver = new postDriver();
@@ -25,6 +27,7 @@ export default () => {
     updateLoading(false);
   };
 
+  // 副作用はuseEffectなどを利用する
   useEffect(() => {
     // initial load
     (async () => await getPostsByID(1))()
@@ -32,6 +35,7 @@ export default () => {
 
   const reload = async (id: number) => await getPostsByID(id);
 
+  // Stateと更新用の関数などをexportする
   return {
     state: {
       post,

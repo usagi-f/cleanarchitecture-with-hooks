@@ -17,13 +17,16 @@ const PostItem = (data: PostItem) => (
 
 
 const Post: React.FC = () => {
+  // AdapterからStateと関数を取得
   const { state, functions } = postAdapter();
+
   const inputEl = useRef<HTMLInputElement>(null);
   const handleOnClick = () => {
     if(inputEl.current) {
       functions.reload(inputEl.current.valueAsNumber);
     }
   };
+
   return (
     <div>
       <input type="number" ref={inputEl} defaultValue={`1`} />
