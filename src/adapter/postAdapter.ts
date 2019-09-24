@@ -18,7 +18,10 @@ export default () => {
     updateLoading(true);
     const driver = new restClient();
     const usecase = new postUsecase(driver);
-    const res = await usecase.getPosts(id);
+
+    // 状況に応じたエラーハンドリング
+    const res = await usecase.getPosts(id).catch(() => initialState);
+
     updatePost({
       id: res.id,
       title: res.title,
@@ -33,9 +36,10 @@ export default () => {
     (async () => await getPostsByID(1))()
   }, [])
 
+  // 外部からStateを操作するための関数
   const reload = async (id: number) => await getPostsByID(id);
 
-  // Stateと更新用の関数などをexportする
+  // Stateと操作用の関数をexportする
   return {
     state: {
       post,
