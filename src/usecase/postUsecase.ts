@@ -2,7 +2,7 @@ import { Post } from '../interface/model';
 import { IGraphqlClient } from '../interface/driver';
 
 // アプリに必要なリソースを手に入れるためのメソッドが並ぶ
-// リクエストに必要なパラメータ等はここで付与することができる
+// リクエストに必要なクエリやパラメータ等はここで扱う
 
 export default class postUsecase {
   private client: IGraphqlClient;
@@ -20,7 +20,7 @@ export default class postUsecase {
       }
     }`;
     const response = await this.client.fetch<{ post: Post }>(query);
-    return response.post
+    return Promise.resolve(response.post)
   }
 
   async getPostsList(): Promise<Post[]> {
@@ -32,6 +32,6 @@ export default class postUsecase {
       }
     }`;
     const response = await this.client.fetch<{ posts: Post[] }>(query);
-    return response.posts
+    return Promise.resolve(response.posts)
   }
 }
