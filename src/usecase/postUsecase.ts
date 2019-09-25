@@ -1,21 +1,35 @@
 import { Post } from '../interface/model';
-import { IRestClient } from '../interface/driver';
+import { IGraphqlClient } from '../interface/driver';
 
 // アプリに必要なリソースを手に入れるためのメソッドが並ぶ
 // リクエストに必要なパラメータ等はここで付与することができる
 
 export default class postUsecase {
-  private client: IRestClient<Post>;
+  private client: IGraphqlClient<Post>;
 
-  constructor(client: IRestClient<Post>) {
+  constructor(client: IGraphqlClient<Post>) {
     this.client = client;
   }
 
   async getPosts(id: number): Promise<Post> {
-    return await this.client.getPosts(id);
+    const query = `{
+      post(postId: ${id}) {
+        id
+        title
+        body
+      }
+    }`;
+    return await this.client.getPosts(query);
   }
 
   async getPostsList(): Promise<Post[]> {
-    return await this.client.getPostsAll();
+    const query = `{
+      posts {
+        id
+        title
+        body
+      }
+    }`;
+    return await this.client.getPostsAll(query);
   }
 }

@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import postUsecase from '../usecase/postUsecase';
-import restClient from '../driver/restClient';
+import graphqlClient from '../driver/graphqlClient';
 
 type Post = {
   id: number;
@@ -36,7 +36,7 @@ export default (): PickupPostAdapter => {
   // 処理は自由に分割してもよい
   const getPostsByID = async (id: number): Promise<void> => {
     updateLoading(true);
-    const driver = new restClient();
+    const driver = new graphqlClient();
     const usecase = new postUsecase(driver);
 
     // 状況に応じたエラーハンドリング
