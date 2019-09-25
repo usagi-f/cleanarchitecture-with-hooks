@@ -1,12 +1,13 @@
-import postDriver, { Post } from '../driver/restClient'
+import { Post } from '../interface/model';
+import { IRestClient } from '../interface/driver';
 
 // アプリに必要なリソースを手に入れるためのメソッドが並ぶ
 // リクエストに必要なパラメータ等はここで付与することができる
 
 export default class postUsecase {
-  private client: postDriver;
+  private client: IRestClient<Post>;
 
-  constructor(client: postDriver) {
+  constructor(client: IRestClient<Post>) {
     this.client = client;
   }
 
