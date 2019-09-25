@@ -4,7 +4,6 @@ export abstract class IRestClient<T> {
   abstract async getPostsAll(): Promise<T[]>
 }
 
-export abstract class IGraphqlClient<T> {
-  abstract async getPosts(query: string): Promise<T>
-  abstract async getPostsAll(query: string): Promise<T[]>
+export abstract class IGraphqlClient {
+  abstract async fetch<T>(query: string): Promise<T>
 }

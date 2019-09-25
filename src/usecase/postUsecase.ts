@@ -5,9 +5,9 @@ import { IGraphqlClient } from '../interface/driver';
 // リクエストに必要なパラメータ等はここで付与することができる
 
 export default class postUsecase {
-  private client: IGraphqlClient<Post>;
+  private client: IGraphqlClient;
 
-  constructor(client: IGraphqlClient<Post>) {
+  constructor(client: IGraphqlClient) {
     this.client = client;
   }
 
@@ -19,7 +19,8 @@ export default class postUsecase {
         body
       }
     }`;
-    return await this.client.getPosts(query);
+    const response = await this.client.fetch<{ post: Post }>(query);
+    return response.post
   }
 
   async getPostsList(): Promise<Post[]> {
@@ -30,6 +31,7 @@ export default class postUsecase {
         body
       }
     }`;
-    return await this.client.getPostsAll(query);
+    const response = await this.client.fetch<{ posts: Post[] }>(query);
+    return response.posts
   }
 }
