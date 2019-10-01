@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import postUsecase from '../usecase/postUsecase';
-import graphqlClient from '../driver/graphqlClient';
+import graphqlClient from '../adapter/graphqlClient';
 
 type Post = {
   id: number;
@@ -9,7 +9,7 @@ type Post = {
 };
 
 // UIへ渡すオブジェクト
-interface PickupPostAdapter {
+interface PickupPostContainer {
   state: {
     post: Post;
     loading: boolean;
@@ -27,7 +27,7 @@ const initialState: Post = {
 
 // UIの構築に必要なオブジェクトを取得して提供する
 // この例では「ピックアップ投稿」を表示するために、postデータを手に入れるユースケースを利用する
-export default (): PickupPostAdapter => {
+export default (): PickupPostContainer => {
 
   // Stateの生成
   const [post, updatePost] = useState(initialState);
@@ -36,8 +36,8 @@ export default (): PickupPostAdapter => {
   // 処理は自由に分割してもよい
   const getPostsByID = async (id: number): Promise<void> => {
     updateLoading(true);
-    const driver = new graphqlClient();
-    const usecase = new postUsecase(driver);
+    const adapter = new graphqlClient();
+    const usecase = new postUsecase(adapter);
 
     // 状況に応じたエラーハンドリング
     const res = await usecase.getPosts(id).catch(() => initialState);

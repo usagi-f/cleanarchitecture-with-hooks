@@ -1,5 +1,5 @@
 import React, { useRef } from 'react';
-import pickupPostAdapter from '../../adapter/pickupPostAdapter'
+import pickupPostContainer from '../../containers/pickupPostContainer'
 
 // コンポーネントの内部で利用する型
 type PostItem = {
@@ -8,17 +8,16 @@ type PostItem = {
   body: string;
 }
 
-const PostItem = (data: PostItem) => (
+const PostItem: React.FC<PostItem> = (data: PostItem) => (
   <div>
     <h3>{data.id}: {data.title}</h3>
     <p>{data.body}</p>
   </div>
 );
 
-
 const PickupList: React.FC = () => {
-  // AdapterからStateと関数を取得
-  const { state, functions } = pickupPostAdapter();
+  // ContainerからStateと関数を取得
+  const { state, functions } = pickupPostContainer();
 
   const inputEl = useRef<HTMLInputElement>(null);
   const handleOnClick = () => {
